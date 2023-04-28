@@ -29,10 +29,46 @@ const rocky = {
   coupon: true,
 };
 
-//Need function to calculate 25% discount with subscription after refill
-//and if has a coupon receives $10 discount after the subscription discount.
+//Function to calculate price after refill
+function calculate (customer){ 
+  const price = customer.pricePerRefill * customer.refills;
+  return price 
+}
+//console.log(calculate(rocky));
 
-const calculate = (pricePerRefill, refills, subscription, coupon) => {
+//Function for 25% discount with subscription after refill
+function discount (customer){
+  if (customer.subscription === true){
+  const percent25 = calculate(customer) - calculate(customer) * 0.25
+  return percent25  
+} else return calculate(customer)
+}
+//console.log(discount(rocky))
+
+//Function if customer has a coupon receives $10 discount after the subscription discount.
+function coupon (customer){
+if (customer.coupon === true){
+  const coupon10 = discount(customer) - 10 
+  return coupon10
+} else return discount(customer)
+}
+//console.log(coupon(rocky))
+
+//Declare final amount for each customer
+const finalAmountTimmy= coupon(timmy)
+const finalAmountSarah = coupon(sarah)
+const finalAmountRocky = coupon(rocky) 
+
+//Prints on console results
+console.log(`Timmy => "Your grand total is $${finalAmountTimmy}"`)
+console.log(`Sarah => "Your grand total is $${finalAmountSarah}"`)
+console.log(`Rocky => "Your grand total is $${finalAmountRocky}"`)
+
+
+
+//-----------------------------------------------------------------------------------------------------------------------//
+//Original code but forgot I needed three functions for the workshop
+const calculate1 = (pricePerRefill, refills, subscription, coupon) => {
   const product = pricePerRefill * refills;
 
   if (subscription === true && coupon === true) {
@@ -48,43 +84,11 @@ const calculate = (pricePerRefill, refills, subscription, coupon) => {
     return grandTotal;
   } else return product;
 };
-//const total = (pricePerRefill, refills, subscription, coupon) => {
-//  const product = pricePerRefill *refills
-// for (keys in sarah){
-//   let totalSum = prescription * refills * 0.25
-//   return totalSum
-//   console.log(totalSum)
-//  } if (subscription === true && coupon === false){
-// let totalSum = product * 0.25
-//   return totalSum
-// }
 
-console.log(
-  "Grand Total for Timmy: $",
-  calculate(
-    timmy.pricePerRefill,
-    timmy.refills,
-    timmy.subscription,
-    timmy.coupon
-  )
-);
-console.log(
-  "Grand Total for Sarah: $",
-  calculate(
-    sarah.pricePerRefill,
-    sarah.refills,
-    sarah.subscription,
-    sarah.coupon
-  )
-);
-console.log(
-  "Grand Total for Rocky: $",
-  calculate(
-    rocky.pricePerRefill,
-    rocky.refills,
-    rocky.subscription,
-    rocky.coupon
-  )
-);
+console.log(`Grand Total for Timmy: $${calculate1(timmy.pricePerRefill,timmy.refills,timmy.subscription,timmy.coupon)}`);
+
+console.log(`Grand Total for Sarah: $${calculate1(sarah.pricePerRefill,sarah.refills,sarah.subscription,sarah.coupon)}`);
+
+console.log(`Grand Total for Rocky: $${calculate1(rocky.pricePerRefill,rocky.refills,rocky.subscription,rocky.coupon)}`);
 
 //console.log(total(sarah));
